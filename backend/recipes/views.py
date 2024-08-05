@@ -1,13 +1,10 @@
-from django.views.decorators.csrf import csrf_exempt
 from recipes.models import Recipe
 from recipes.serializers import RecipeSerializer 
-from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 @api_view(['GET', 'POST'])
-@csrf_exempt
 def recipe_view(request, format=None):
   if request.method == 'GET':
     recipes = Recipe.objects.all()
@@ -21,7 +18,6 @@ def recipe_view(request, format=None):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@csrf_exempt
 def recipe_details_view(request, pk, format=None):
   try:
     recipe = Recipe.objects.get(pk=pk)
