@@ -14,8 +14,7 @@ def recipe_view(request, format=None):
     serializer = RecipeSerializer(recipes, many=True) # translates Native into Python
     return Response(serializer.data)
   elif request.method == 'POST':
-    data = JSONParser().parse(request) # parses and translates JSON into Python
-    serializer = RecipeSerializer(data=data)
+    serializer = RecipeSerializer(data=request.data)
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -34,8 +33,7 @@ def recipe_details_view(request, pk, format=None):
     return Response(serializer.data)
   
   elif request.method == 'PUT':
-    data = JSONParser().parse(request)
-    serializer = RecipeSerializer(recipe, data=data)
+    serializer = RecipeSerializer(recipe, data=request.data)
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data)
