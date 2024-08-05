@@ -7,5 +7,6 @@ from accounts import views
 router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('recipes', include('recipes.urls')),
 ]
