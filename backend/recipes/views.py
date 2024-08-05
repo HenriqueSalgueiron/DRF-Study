@@ -9,7 +9,7 @@ from rest_framework import status
 
 @api_view(['GET', 'POST'])
 @csrf_exempt
-def recipe_view(request):
+def recipe_view(request, format=None):
   if request.method == 'GET':
     recipes = Recipe.objects.all()
     serializer = RecipeSerializer(recipes, many=True) # translates Native into Python
@@ -24,7 +24,7 @@ def recipe_view(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @csrf_exempt
-def recipe_details_view(request, pk):
+def recipe_details_view(request, pk, format=None):
   try:
     recipe = Recipe.objects.get(pk=pk)
   except Recipe.DoesNotExist:
