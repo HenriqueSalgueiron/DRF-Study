@@ -6,6 +6,7 @@ from .models import STATUS_CHOICES, Recipe
 
 class RecipeSerializer(serializers.Serializer):
   id = serializers.IntegerField(read_only=True)
+  owner = serializers.ReadOnlyField(source='owner.id')
   title = serializers.CharField(max_length=100)
   description = serializers.CharField(required=False)
   directions = serializers.CharField()

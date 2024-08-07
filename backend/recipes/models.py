@@ -20,12 +20,12 @@ UNIT_CHOICES = [
 ]
 
 class Recipe(models.Model):
-  # user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+  owner = models.ForeignKey('auth.User', related_name='recipes', on_delete=models.CASCADE)
   created = models.DateTimeField(auto_now_add=True)
   title = models.CharField(max_length=50)
   description = models.CharField(max_length=500, blank=True,null=True)
   directions = models.TextField()
-  status = models.CharField(max_length=10, default='draft', choices=STATUS_CHOICES) # active, inactive, draft
+  status = models.CharField(max_length=10, default='draft', choices=STATUS_CHOICES)
   deleted_at = models.DateTimeField(blank=True, null=True, editable=False)
   # picture = models.imageField(upload_to='recipes/images', blank=True, null=True)
 
@@ -42,14 +42,3 @@ class RecipeIngredient(models.Model):
   ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
   quantity = models.FloatField()
   unit = models.CharField(max_length=20, choices=UNIT_CHOICES)
-
-# from recipes.models import Recipe
-# from recipes.serializers import RecipeSerializer
-# from rest_framework.renderers import JSONRenderer
-# from rest_framework.parsers import JSONParser
-
-# recipe = Recipe(title='Bolo de cenoura')
-# recipe.save()
-
-# recipe = Recipe(title='Torta de morango')
-# recipe.save()
