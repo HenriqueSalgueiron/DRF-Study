@@ -1,14 +1,15 @@
+## V3: Using generic class-based views
+
 from recipes.models import Recipe
 from recipes.serializers import RecipeSerializer 
 from recipes.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 from rest_framework import permissions
 
-## V3: Using generic class-based views
 class RecipeView(generics.ListCreateAPIView): 
   queryset = Recipe.objects.all()
   serializer_class = RecipeSerializer
-  permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
   def perform_create(self, serializer):
     serializer.save(owner=self.request.user)
@@ -18,7 +19,9 @@ class RecipeDetailsView(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = RecipeSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-## Other versions: 
+
+
+## ## ## ## ## ## ## ## ## ## ## ## Other versions ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
 
 # from django.http import Http404
 # from rest_framework.views import APIView
