@@ -1,9 +1,7 @@
 from django.urls import path
-from accounts import views
-
-from . import views
+from .views import UserViewSet
 
 urlpatterns = [
-  path('', views.UserView.as_view(), name='users'),
-  path('/<int:pk>', views.UserDetailsView.as_view())
+  path('', UserViewSet.as_view({'get': 'list'}), name='users'),
+  path('/<int:pk>', UserViewSet.as_view({'get': 'retrieve'}, name='user-details')),
 ]

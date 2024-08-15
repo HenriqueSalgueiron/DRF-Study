@@ -1,24 +1,42 @@
-## V3: Using generic class-based views
-
+## V4: Using ViewSets
 from recipes.models import Recipe
-from recipes.serializers import RecipeSerializer 
+from recipes.serializers import RecipeSerializer
 from recipes.permissions import IsOwnerOrReadOnly
-from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework import permissions
 
-class RecipeView(generics.ListCreateAPIView): 
-  queryset = Recipe.objects.all()
-  serializer_class = RecipeSerializer
-  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-  def perform_create(self, serializer):
-    serializer.save(owner=self.request.user)
-
-class RecipeDetailsView(generics.RetrieveUpdateDestroyAPIView):
+class RecipeViewSet(viewsets.ModelViewSet): #provides 'list', 'create', 'retrieve', 'update' and 'destroy'
   queryset = Recipe.objects.all()
   serializer_class = RecipeSerializer
   permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+  def perform_create(self, serializer):
+    serializer.save(owner=self.request.user)
+
+  # @action(detail=True, methods=['POST'])
+  # def favorite(self, request, pk=None): 
+  # ...
+
+## V3: Using generic class-based views ##
+
+# from recipes.models import Recipe
+# from recipes.serializers import RecipeSerializer 
+# from recipes.permissions import IsOwnerOrReadOnly
+# from rest_framework import generics
+# from rest_framework import permissions
+
+# class RecipeView(generics.ListCreateAPIView): 
+#   queryset = Recipe.objects.all()
+#   serializer_class = RecipeSerializer
+#   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+#   def perform_create(self, serializer):
+#     serializer.save(owner=self.request.user)
+
+# class RecipeDetailsView(generics.RetrieveUpdateDestroyAPIView):
+#   queryset = Recipe.objects.all()
+#   serializer_class = RecipeSerializer
+#   permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 ## ## ## ## ## ## ## ## ## ## ## ## Other versions ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 

@@ -46,6 +46,8 @@ REST_FRAMEWORK = {
   'PAGE_SIZE': 10
 }
 
+LOGIN_REDIRECT_URL = "/recipes" 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
